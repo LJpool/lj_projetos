@@ -6,3 +6,4 @@ segundos = minutos *60
 
 #exibir o resultado
 print(minutos, 'minutos equivalem a ', segundos, 'segundos ')
+
