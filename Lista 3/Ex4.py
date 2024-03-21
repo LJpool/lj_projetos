@@ -1,6 +1,6 @@
-n = int(input('digite um nro inteiro: '))
-#Condição para testar se n é divisivel por
-if n % 3 == 0:
-    print('é divisivel por 3')
+numero = int(input("Digite um número inteiro: "))
+
+if numero % 3 == 0:
+    print("O número", numero, "é divisível por 3.")
 else:
-    print('Não é divisivel por 3')    
+    print("O número", numero, "não é divisível por 3.")

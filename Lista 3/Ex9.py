@@ -1,3 +1,4 @@
+# Não tenho certeza se vai funcionar mais ta ai.
 cotacao_real_para_euro = float(input("Digite a cotação do Real para Euro: "))
 cotacao_real_para_dolar = float(input("Digite a cotação do Real para Dólar: "))
 cotacao_euro_para_dolar = float(input("Digite a cotação do Euro para Dólar: "))
