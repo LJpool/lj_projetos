@@ -10,4 +10,4 @@ while (tentativas < 3 and acertouasenha == False):
         acertouasenha = True
         print('senha correta. ')
     else:
-        print('senha errada mané!!! vc posui mai', 3-tentativas,'tentativas!') #gta 5 é muito bom
+        print('senha errada mané!!! vc posui mai', 3-tentativas,'tentativas!') 
