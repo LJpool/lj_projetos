@@ -172,3 +172,4 @@ class ONGAdoteGatinhos:
 if __name__ == "__main__":
     ong = ONGAdoteGatinhos("gatinhos.csv")
     ong.menu()
+    
