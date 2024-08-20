@@ -1,2 +1,2 @@
-# Fundamentos de programação 2024/1 - Unisinos
+# programação 2024 - Unisinos
 Aluno: Luiz Júnior
