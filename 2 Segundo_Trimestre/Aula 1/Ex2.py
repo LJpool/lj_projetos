@@ -10,5 +10,7 @@ class data:
 class datateste:
      def executar_teste():
           data = data(20, 8, 2024)
-          data = (data)
+          data = () #displaydata () não esta se encachando aqui!!!!
 datateste.executar_teste()
+print
+#rever itens
