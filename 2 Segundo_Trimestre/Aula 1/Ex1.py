@@ -20,4 +20,3 @@ print("base:", retangulo.obter_base())
 print("base:", retangulo.obter_altura())
 print("base:", retangulo.calcular_area())
 print("base:", retangulo.calcular_perimetro())  
-    
