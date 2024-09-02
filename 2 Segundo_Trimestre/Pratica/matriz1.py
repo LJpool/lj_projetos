@@ -50,3 +50,31 @@ transposta = list(map(list, zip(*matriz)))
 print("\nMatriz transposta:")
 imprime_matriz(transposta)
 
+'''
+matriz = [[0] * 6 for _ in range(4)]
+
+print("Insira 6 números inteiros para a primeira linha:")
+for i in range(6):
+    matriz[0][i] = int(input(f"Valor {i+1}: "))
+
+matriz[1] = matriz[0][::-1]
+
+for i in range(6):
+    matriz[2][i] = matriz[0][i] + matriz[1][i]
+
+pares = [num for num in matriz[0] if num % 2 == 0]
+impares = [num for num in matriz[0] if num % 2 != 0]
+matriz[3] = pares + impares
+
+def imprime_matriz(matriz):
+    for linha in matriz:
+        print("\t".join(map(str, linha)))
+
+print("\nMatriz original:")
+imprime_matriz(matriz)
+
+transposta = list(map(list, zip(*matriz)))
+
+print("\nMatriz transposta:")
+imprime_matriz(transposta)
+'''
