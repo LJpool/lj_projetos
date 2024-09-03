@@ -1,4 +1,4 @@
-# so pegar e meter fixa para tirar duvidas
+#sistema do hotel
 class Quarto:
     def __init__(self, numero, tipo, preco):
         self.numero = numero
@@ -74,9 +74,8 @@ class Hotel:
                 return
         print(f"Quarto {numero_quarto} não está ocupado no momento.")
 
-# Simulação interativa
+#menu
 if __name__ == "__main__":
-    # Criando o hotel e os quartos
     hotel = Hotel("Hotel Central")
     hotel.adicionar_quarto(Quarto(30, "normal", 100.0))
     hotel.adicionar_quarto(Quarto(69, "luxo", 200.0))
