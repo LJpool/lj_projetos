@@ -137,7 +137,7 @@ def main():
             data = int(input("Data: "))
             quarto_numero = int(input("Quarto: "))
             disponivel = pousada.consultaDisponibilidade(data, quarto_numero)
-            print(f"Quarto {'disponível' if disponivel else 'indisponível'}")
+            print(f"O quarto esta {'disponivel' if disponivel else 'indisponivel'}")
         elif opcao == '2':
             inicio = int(input("Início: "))
             fim = int(input("Fim: "))
