@@ -1,32 +1,40 @@
 class Pessoa:
     def __init__(self, nome, mae=None, pai=None):
         self.nome = nome
-        self.mae = mae
-        self.pai = pai
+        self.mae = mae  # mae deve ser uma instância de Pessoa ou None
+        self.pai = pai  # pai deve ser uma instância de Pessoa ou None
 
-    # Verifica se duas pessoas possuem o mesmo nome e a mesma mãe
+    # a) Método para verificar a igualdade semântica (mesmo nome e mesma mãe)
     def igualdade_semantica(self, outra_pessoa):
         return self.nome == outra_pessoa.nome and self.mae == outra_pessoa.mae
 
-    # Verifica se duas pessoas são irmãs (mesma mãe ou pai)
+    # b) Método para verificar se duas pessoas são irmãs (mesma mãe ou mesmo pai)
     def sao_irmas(self, outra_pessoa):
         return self.mae == outra_pessoa.mae or self.pai == outra_pessoa.pai
 
-    # Verifica se uma pessoa é antecessora (pai, mãe, avó, avô)
+    # c) Método para verificar se uma pessoa é antecessora (pai, mãe ou antecessores deles)
     def eh_antecessora(self, outra_pessoa):
         if self == outra_pessoa.mae or self == outra_pessoa.pai:
             return True
-        if self == outra_pessoa.mae.mae or self == outra_pessoa.mae.pai or \
-           self == outra_pessoa.pai.mae or self == outra_pessoa.pai.pai:
+        if outra_pessoa.mae and self.eh_antecessora(outra_pessoa.mae):
+            return True
+        if outra_pessoa.pai and self.eh_antecessora(outra_pessoa.pai):
             return True
         return False
 
+# Criando pessoas para teste
+mae = Pessoa("Maria")
+pai = Pessoa("João")
+pessoa1 = Pessoa("Alice", mae=mae, pai=pai)
+pessoa2 = Pessoa("Alice", mae=mae)  # Mesmo nome e mesma mãe
+pessoa3 = Pessoa("Carlos", mae=mae, pai=pai)  # Irmão de pessoa1
 
-# Exemplo de uso
-pessoa1 = Pessoa("Maria", mae="Ana")
-pessoa2 = Pessoa("João", mae="Ana")
-pessoa3 = Pessoa("Lucas", mae="Carla")
+# Teste de igualdade semântica
+print(pessoa1.igualdade_semantica(pessoa2))  # True (mesmo nome e mãe)
 
-print(pessoa1.igualdade_semantica(pessoa2))  # False, pois os nomes são diferentes
-print(pessoa1.sao_irmas(pessoa2))            # True, pois têm a mesma mãe
-print(pessoa3.eh_antecessora(pessoa1))       # False, não é antecessora
+# Teste se são irmãs
+print(pessoa1.sao_irmas(pessoa3))  # True (mesma mãe e pai)
+
+# Teste se pessoa1 é antecessora de pessoa3
+print(mae.eh_antecessora(pessoa3))  # True (Maria é a mãe de Carlos)
+print(pai.eh_antecessora(pessoa1))  # True (João é o pai de Alice)
