@@ -9,7 +9,7 @@ class Data:
 
 # Aplicativo de teste
 def DataTeste():
-    data = Data(30, 9, 2024)
+    data = Data(20, 8, 2024)
     data.displayData()
 
 # Executa o teste
