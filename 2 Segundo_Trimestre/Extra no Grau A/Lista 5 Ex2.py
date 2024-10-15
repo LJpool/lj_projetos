@@ -2,11 +2,11 @@ class Pais:
     def __init__(self, codigo_iso, nome, dimensao, populacao=0):
         self.codigo_iso = codigo_iso
         self.nome = nome
-        self.dimensao = dimensao  # Em Km
+        self.dimensao = dimensao  # Em Km²
         self.populacao = populacao  # População inicial
-        self.fronteiras = []  # Lista de países com os quais faz fronteira (max. 40)
+        self.fronteiras = []  # Lista de países com os quais faz fronteira (máx. 40)
 
-    # Métodos de acesso (getters e setters)
+    # b) Métodos de acesso (getters e setters)
     def get_codigo_iso(self):
         return self.codigo_iso
 
@@ -31,21 +31,21 @@ class Pais:
     def set_dimensao(self, dimensao):
         self.dimensao = dimensao
 
-    # Verificar igualdade semântica (mesmo código ISO)
+    # c) Verificar igualdade semântica (mesmo código ISO)
     def igualdade_semantica(self, outro_pais):
         return self.codigo_iso == outro_pais.codigo_iso
 
-    # Verificar se outro país é limítrofe (está na lista de fronteiras)
+    # d) Verificar se outro país é limítrofe (está na lista de fronteiras)
     def eh_limitrofe(self, outro_pais):
         return outro_pais in self.fronteiras
 
-    # Retornar a densidade populacional (população / dimensão)
+    # e) Retornar a densidade populacional (população / dimensão)
     def densidade_populacional(self):
         if self.dimensao > 0:
             return self.populacao / self.dimensao
         return 0
 
-    # Retornar lista de vizinhos comuns entre dois países
+    # f) Retornar lista de vizinhos comuns entre dois países
     def vizinhos_comuns(self, outro_pais):
         return [pais for pais in self.fronteiras if pais in outro_pais.fronteiras]
 
@@ -65,14 +65,14 @@ brasil.adicionar_fronteira(argentina)
 brasil.adicionar_fronteira(uruguai)
 argentina.adicionar_fronteira(uruguai)
 
-# Teste de igualdade semântica
+# c) Teste de igualdade semântica
 print(brasil.igualdade_semantica(argentina))  # False
 
-# Verificar se são países limítrofes
+# d) Verificar se são países limítrofes
 print(brasil.eh_limitrofe(argentina))  # True
 
-# Densidade populacional do Brasil
+# e) Densidade populacional do Brasil
 print(brasil.densidade_populacional())  # População / Dimensão = ~24,77 hab/km²
 
-# Vizinhos comuns entre Brasil e Argentina
+# f) Vizinhos comuns entre Brasil e Argentina
 print([pais.nome for pais in brasil.vizinhos_comuns(argentina)])  # ['Uruguai']

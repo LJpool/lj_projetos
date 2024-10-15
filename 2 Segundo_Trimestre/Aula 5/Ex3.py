@@ -1,4 +1,4 @@
-# Definição da classe Pais
+# Definição da classe Pais.
 class Pais:
     def __init__(self, codigo_iso, nome, dimensao, populacao=0):
         self.codigo_iso = codigo_iso
@@ -126,26 +126,26 @@ america_do_sul.adicionar_pais(brasil)
 america_do_sul.adicionar_pais(argentina)
 america_do_sul.adicionar_pais(uruguai)
 
-# c) Dimensão total do continente
+# Dimensão total do continente
 print(f"Dimensão total: {america_do_sul.dimensao_total()} km²")
 
-# d) População total do continente
+# População total do continente
 print(f"População total: {america_do_sul.populacao_total()} habitantes")
 
-# e) Densidade populacional do continente
+# Densidade populacional do continente
 print(f"Densidade populacional: {america_do_sul.densidade_populacional()} hab/km²")
 
-# f) País com maior população
+# País com maior população
 print(f"País com maior população: {america_do_sul.pais_maior_populacao().get_nome()}")
 
-# g) País com menor população
+# País com menor população
 print(f"País com menor população: {america_do_sul.pais_menor_populacao().get_nome()}")
 
-# h) País com maior dimensão territorial
+# País com maior dimensão territorial
 print(f"País com maior dimensão: {america_do_sul.pais_maior_dimensao().get_nome()}")
 
-# i) País com menor dimensão territorial
+# País com menor dimensão territorial
 print(f"País com menor dimensão: {america_do_sul.pais_menor_dimensao().get_nome()}")
 
-# j) Razão territorial do maior país em relação ao menor país
+# Razão territorial do maior país em relação ao menor país
 print(f"Razão territorial (maior/menor): {america_do_sul.razao_territorial()}")
