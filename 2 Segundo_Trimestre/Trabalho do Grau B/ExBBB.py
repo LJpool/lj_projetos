@@ -6,9 +6,9 @@ class Process:
         self.pid = pid
 
     def execute(self):
-        raise NotImplementedError("Este método deve ser implementado pelas subclasses.")
+        raise NotImplementedError("Este método deve ser implementado nas subclasses.")
 
-# Subclasses específicas
+# Subclasse de processo de cálculo
 class ComputingProcess(Process):
     def __init__(self, pid, expression):
         super().__init__(pid)
@@ -17,20 +17,18 @@ class ComputingProcess(Process):
     def execute(self):
         try:
             result = eval(self.expression)
-            print(f"Resultado do cálculo {self.expression} = {result}")
+            print(f"Processo {self.pid}: Resultado do cálculo {self.expression} = {result}")
         except Exception as e:
-            print(f"Erro na expressão: {e}")
+            print(f"Erro ao executar o cálculo: {e}")
 
+# Subclasse de processo de gravação
 class WritingProcess(Process):
-    def __init__(self, pid, expression):
-        super().__init__(pid)
-        self.expression = expression
-
     def execute(self):
         with open("computation.txt", "a") as file:
-            file.write(self.expression + "\n")
-        print(f"Expressão '{self.expression}' gravada em computation.txt.")
+            file.write(f"Processo {self.pid}: {self.expression}\n")
+        print(f"Processo {self.pid}: Gravação concluída.")
 
+# Subclasse de processo de leitura
 class ReadingProcess(Process):
     def __init__(self, pid, process_list):
         super().__init__(pid)
@@ -38,61 +36,64 @@ class ReadingProcess(Process):
 
     def execute(self):
         if not os.path.exists("computation.txt"):
-            print("Arquivo computation.txt não encontrado.")
+            print("Arquivo de computações não encontrado.")
             return
 
         with open("computation.txt", "r") as file:
             lines = file.readlines()
 
         for line in lines:
-            line = line.strip()
-            if line:
-                self.process_list.append(ComputingProcess(len(self.process_list) + 1, line))
+            expression = line.strip()
+            new_process = ComputingProcess(len(self.process_list) + 1, expression)
+            self.process_list.append(new_process)
 
         open("computation.txt", "w").close()  # Limpa o arquivo
-        print("Arquivo computation.txt lido e expressões carregadas como processos de cálculo.")
+        print(f"Processo {self.pid}: Leitura e criação de novos processos concluída.")
 
+# Subclasse de processo de impressão
 class PrintingProcess(Process):
     def __init__(self, pid, process_list):
         super().__init__(pid)
         self.process_list = process_list
 
     def execute(self):
-        print("Pool de processos:")
+        print("Fila de processos:")
         for process in self.process_list:
             print(f"PID: {process.pid}, Tipo: {type(process).__name__}")
 
-# Classe Sistema
+# Classe para gerenciar o sistema
 class System:
     def __init__(self):
         self.process_list = []
         self.next_pid = 1
 
     def create_process(self):
-        print("1. Processo de cálculo\n2. Processo de gravação\n3. Processo de leitura\n4. Processo de impressão")
-        choice = int(input("Selecione o tipo de processo: "))
-        if choice == 1:
-            expression = input("Digite a expressão (ex: 2 + 2): ")
-            self.process_list.append(ComputingProcess(self.next_pid, expression))
-        elif choice == 2:
-            expression = input("Digite a expressão para gravar: ")
-            self.process_list.append(WritingProcess(self.next_pid, expression))
-        elif choice == 3:
-            self.process_list.append(ReadingProcess(self.next_pid, self.process_list))
-        elif choice == 4:
-            self.process_list.append(PrintingProcess(self.next_pid, self.process_list))
+        process_type = input("Escolha o tipo de processo (1: Cálculo, 2: Gravação, 3: Leitura, 4: Impressão): ")
+        if process_type == "1":
+            expression = input("Digite a expressão a ser calculada: ")
+            new_process = ComputingProcess(self.next_pid, expression)
+        elif process_type == "2":
+            new_process = WritingProcess(self.next_pid)
+        elif process_type == "3":
+            new_process = ReadingProcess(self.next_pid, self.process_list)
+        elif process_type == "4":
+            new_process = PrintingProcess(self.next_pid, self.process_list)
         else:
-            print("Opção inválida.")
+            print("Tipo de processo inválido.")
             return
-        print(f"Processo com PID {self.next_pid} criado.")
+
+        self.process_list.append(new_process)
         self.next_pid += 1
+        print(f"Processo {new_process.pid} criado com sucesso.")
 
     def execute_next(self):
         if not self.process_list:
-            print("Nenhum processo para executar.")
+            print("Nenhum processo na fila para executar.")
             return
+
         process = self.process_list.pop(0)
         process.execute()
+        print(f"Processo {process.pid} executado e removido da fila.")
 
     def execute_specific(self):
         pid = int(input("Digite o PID do processo a ser executado: "))
@@ -100,6 +101,7 @@ class System:
             if process.pid == pid:
                 process.execute()
                 self.process_list.pop(i)
+                print(f"Processo {process.pid} executado e removido da fila.")
                 return
         print("Processo não encontrado.")
 
@@ -107,45 +109,48 @@ class System:
         with open("process_pool.txt", "w") as file:
             for process in self.process_list:
                 file.write(f"{process.pid},{type(process).__name__}\n")
-        print("Fila de processos salva em process_pool.txt.")
+        print("Fila de processos salva em arquivo.")
 
     def load_processes(self):
         if not os.path.exists("process_pool.txt"):
-            print("Arquivo process_pool.txt não encontrado.")
+            print("Arquivo de processos não encontrado.")
             return
+
         with open("process_pool.txt", "r") as file:
             lines = file.readlines()
-        self.process_list = []
+
+        self.process_list.clear()
         for line in lines:
             pid, process_type = line.strip().split(",")
-            pid = int(pid)
             if process_type == "ComputingProcess":
-                self.process_list.append(ComputingProcess(pid, "0 + 0"))
+                expression = input(f"Digite a expressão para o processo {pid}: ")
+                self.process_list.append(ComputingProcess(int(pid), expression))
             elif process_type == "WritingProcess":
-                self.process_list.append(WritingProcess(pid, ""))
+                self.process_list.append(WritingProcess(int(pid)))
             elif process_type == "ReadingProcess":
-                self.process_list.append(ReadingProcess(pid, self.process_list))
+                self.process_list.append(ReadingProcess(int(pid), self.process_list))
             elif process_type == "PrintingProcess":
-                self.process_list.append(PrintingProcess(pid, self.process_list))
-        print("Fila de processos carregada de process_pool.txt.")
+                self.process_list.append(PrintingProcess(int(pid), self.process_list))
+
+        print("Fila de processos carregada do arquivo.")
 
 # Menu principal
 def main():
     system = System()
     while True:
-        print("\n1. Criar processo\n2. Executar próximo\n3. Executar processo específico\n4. Salvar processos\n5. Carregar processos\n6. Sair")
-        choice = int(input("Selecione uma opção: "))
-        if choice == 1:
+        print("\n1: Criar processo\n2: Executar próximo\n3: Executar processo específico\n4: Salvar fila\n5: Carregar fila\n6: Sair")
+        choice = input("Escolha uma opção: ")
+        if choice == "1":
             system.create_process()
-        elif choice == 2:
+        elif choice == "2":
             system.execute_next()
-        elif choice == 3:
+        elif choice == "3":
             system.execute_specific()
-        elif choice == 4:
+        elif choice == "4":
             system.save_processes()
-        elif choice == 5:
+        elif choice == "5":
             system.load_processes()
-        elif choice == 6:
+        elif choice == "6":
             break
         else:
             print("Opção inválida.")
