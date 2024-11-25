@@ -33,7 +33,7 @@ class ComputingProcess(Process): # subclasse para processo dos calculos
                     return
                 print(f"resultado da expressão {self.expression}: {result}")
             except ValueError:
-                print("Erro: operandos invalidos")
+                print("Erro operandos invalidos")
         else:
             print("Expressão malfeita")
 
@@ -204,6 +204,6 @@ while True:
         print("Encerrando o programa.")
         break
     else:
-        print("Opção inválida. Tente novamente.")
+        print("Opçao invalida. Tente novamente.")
 
 #gg
