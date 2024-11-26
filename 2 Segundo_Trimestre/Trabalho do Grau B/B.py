@@ -35,7 +35,7 @@ class ComputingProcess(Process): # subclasse para processo dos calculos
             except ValueError:
                 print("Erro operandos invalidos")
         else:
-            print("Expressão malfeita")
+            print("Expressao malfeita")
 
 class WritingProcess(Process): # a subclasse para processos de gravaçao 
     def __init__(self, pid, expression):
@@ -62,7 +62,7 @@ class ReadingProcess(Process): # subclasse pro processo de leitura
                         new_pid = len(self.process_list) + 1 # vai cria novos processos de calculo e adiciona na lista
                         self.process_list.append(ComputingProcess(new_pid, expression))
             open("computation.txt", "w").close()  # limpa de arquivo apos a leitura
-            print("Arquivo lido e processos de cálculo criados")
+            print("Arquivo lido e processos de calculo criados")
         except FileNotFoundError:
             print("Arquivo computation.txt não encontrado")
 
@@ -80,9 +80,9 @@ class PrintingProcess(Process): # subclasse para processos de impressão
 
 process_list = [] # lista de processos
 
-def create_process(): # as funçoes de gerenciamento de processos
+def create_process(): # menu de funçoes de processos
     print("\nSelecione o tipo de processo para criar:")
-    print("1 - ComputingProcess | Processo de Cálculo")
+    print("1 - ComputingProcess | Processo de Calculo")
     print("2 - WritingProcess | Processo de Gravação")
     print("3 - ReadingProcess | Processo de Leitura")
     print("4 - PrintingProcess | Processo de Impressão")
@@ -94,7 +94,7 @@ def create_process(): # as funçoes de gerenciamento de processos
         expression = input("Digite a expressão ex: 2 + 2 : ") # cria um processo de cálculo
         process = ComputingProcess(pid, expression)
         process_list.append(process)
-        print(f"Processo de Cálculo criado com PID {pid}.")
+        print(f"Processo de Calculo criado com PID {pid}.")
     elif choice == "2":
         expression = input("Digite a expressão para gravar ex: 2 * 2 : ") # cria um processo de gravaçao
         process = WritingProcess(pid, expression)
@@ -109,11 +109,11 @@ def create_process(): # as funçoes de gerenciamento de processos
         process_list.append(process)
         print(f"Processo de Impressão criado com PID {pid}.") # cria um processo de impressão
     else:
-        print("Opção inválida?")
+        print("Opção invalida :( ")
 
 def execute_next_process():
     if not process_list: # vai executa o proximo processo na fila
-        print("A fila de processos está vazia.")
+        print("A fila de processos esta vazia.")
         return
     next_process = process_list.pop(0)
     print(f"\nExecutando o processo com PID {next_process.pid}...")
@@ -121,13 +121,13 @@ def execute_next_process():
 
 def execute_specific_process():
     if not process_list: # executa algum processo específico com o PID ja gerado 
-        print("A fila de processos está vazia.")
+        print("A fila de processos esta vazia.")
         return
 
     try:
         pid = int(input("Digite o PID do processo que deseja executar: "))
     except ValueError:
-        print("PID inválido.")
+        print("PID invalido.")
         return
 
     for process in process_list:
@@ -178,12 +178,12 @@ def load_process_list(): # carrega a lista de processos de um arquivo
     except Exception as e:
         print(f"Erro ao carregar a fila de processos: {e}")
 
-############## Menu Principal ##############
+############## menu principal ##############
 
 while True:
-    print("\n--- Menu ---")
+    print("\n--- MENU ---")
     print("1 - Criar processo")
-    print("2 - Executar próximo processo")
+    print("2 - Executar proximo processo")
     print("3 - Executar processo específico")
     print("4 - Salvar a fila de processos")
     print("5 - Carregar a fila de processos")
